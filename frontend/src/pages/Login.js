@@ -13,14 +13,15 @@ function Login() {
       "https://cyber-risk-backend-f53q.onrender.com/api/auth/login",
       { email, password }
     );
-
+     console.log(res.data);
     localStorage.setItem("token", res.data.token);
 
     alert("Login successful");
     navigate("/dashboard");
 
   } catch (err) {
-    alert("Login failed");
+    console.error(err); // IMPORTANT
+    alert(err.response?.data?.error || "Login failed");
   }
 };
   

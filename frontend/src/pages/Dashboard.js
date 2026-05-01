@@ -16,21 +16,13 @@ function Dashboard() {
     }
 
     // ✅ Correct API call
-    axios.get(
-      "https://cyber-risk-backend-f53q.onrender.com/api/logs",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`   // ✅ IMPORTANT
-        }
+    axios.get("https://cyber-risk-backend-f53q.onrender.com/api/logs", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       }
-    )
-    .then((res) => {
-      setLogs(res.data);
     })
-    .catch((err) => {
-      console.error(err);
-    });
-
+      .then(res => setLogs(res.data))
+      .catch(err => console.log(err));
   }, [navigate]);
 
   const logout = () => {
