@@ -8,16 +8,25 @@ import Dashboard from "./pages/Dashboard";
 // 🔒 Protected Route
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
-  return token ? children : <Navigate to="/" />;
+
+  if (!token) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
 };
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Default Route */}
         <Route path="/" element={<Login />} />
+
+        {/* Register */}
         <Route path="/register" element={<Register />} />
 
+        {/* Dashboard (Protected) */}
         <Route
           path="/dashboard"
           element={
@@ -26,6 +35,9 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Catch all (optional but useful) */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );

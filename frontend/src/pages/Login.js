@@ -8,21 +8,22 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    try {
-      const res = axios.post(
-  "https://cyber-risk-backend-f53q.onrender.com/api/auth/register",
-  { email, password }
-);
-      
+  try {
+    const res = await axios.post(
+      "https://cyber-risk-backend-f53q.onrender.com/api/auth/login",
+      { email, password }
+    );
 
-      localStorage.setItem("token", res.data.token);
-      alert(res.data.message);
-      navigate("/dashboard");
+    localStorage.setItem("token", res.data.token);
 
-    } catch (err) {
-      alert(err.response?.data?.error || "Login failed");
-    }
-  };
+    alert("Login successful");
+    navigate("/dashboard");
+
+  } catch (err) {
+    alert("Login failed");
+  }
+};
+  
 
   return (
     <div style={{ padding: "50px" }}>

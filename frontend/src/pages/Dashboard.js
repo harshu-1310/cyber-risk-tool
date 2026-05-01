@@ -9,18 +9,27 @@ function Dashboard() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
+    // 🔒 Redirect if not logged in
     if (!token) {
       navigate("/");
       return;
     }
 
-  axios.get("https://cyber-risk-backend-f53q.onrender.com", {
-  headers: {
-    Authorization: localStorage.getItem("token")
-  }
-})
-  .then(res => setLogs(res.data))
-  .catch(err => console.log(err));
+    // ✅ Correct API call
+    axios.get(
+      "https://cyber-risk-backend-f53q.onrender.com/api/logs",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`   // ✅ IMPORTANT
+        }
+      }
+    )
+    .then((res) => {
+      setLogs(res.data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 
   }, [navigate]);
 
@@ -37,12 +46,16 @@ function Dashboard() {
 
       <h2>Login Logs</h2>
 
-      {logs.map((log, index) => (
-        <p key={index}>
-          IP: {log.ip} |{" "}
-          {log.isSuspicious ? "⚠️ Suspicious" : "✅ Safe"}
-        </p>
-      ))}
+      {logs.length === 0 ? (
+        <p>No logs found</p>
+      ) : (
+        logs.map((log, index) => (
+          <p key={index}>
+            IP: {log.ip} |{" "}
+            {log.isSuspicious ? "⚠️ Suspicious" : "✅ Safe"}
+          </p>
+        ))
+      )}
     </div>
   );
 }
