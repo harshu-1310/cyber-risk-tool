@@ -14,7 +14,7 @@ function Dashboard() {
       return;
     }
 
-  axios.get("http://localhost:5000/api/logs", {
+  axios.get("https://cyber-risk-backend-f53q.onrender.com", {
   headers: {
     Authorization: localStorage.getItem("token")
   }
