@@ -10,7 +10,7 @@ function Register() {
   const handleRegister = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://cyber-risk-backend-f53q.onrender.com/api/auth/register",
         { email, password }
       );
 
@@ -18,6 +18,7 @@ function Register() {
       navigate("/login");
 
     } catch (err) {
+      console.log(err); // DEBUG
       alert(err.response?.data?.error || "Registration failed");
     }
   };
@@ -26,10 +27,17 @@ function Register() {
     <div style={{ padding: "50px" }}>
       <h2>Register</h2>
 
-      <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+      <input
+        placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)}
+      />
       <br /><br />
 
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={(e) => setPassword(e.target.value)}
+      />
       <br /><br />
 
       <button onClick={handleRegister}>Register</button>
