@@ -1,18 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
-const Log = require("../models/Log");
-const auth = require("../middleware/authMiddleware"); // ✅ ADD THIS
+const Log = require("../models/Log"); // 👈 IMPORTANT
 
-// 🔒 Protected route
-router.get("/", auth, async (req, res) => {
+// ✅ GET ALL LOGS
+router.get("/", async (req, res) => {
   try {
-    const logs = await Log.find({ userId: req.user.id })
-      .sort({ loginTime: -1 });
-
+    const logs = await Log.find().sort({ createdAt: -1 });
     res.json(logs);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Failed to fetch logs" });
   }
 });
 
